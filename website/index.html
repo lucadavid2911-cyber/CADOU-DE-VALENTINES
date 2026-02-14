@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alexia 💘</title>
+  <style>
+    :root{
+      --pink1:#ffd6e7;
+      --pink2:#ffe9f2;
+      --card:#ffffffcc;
+      --text:#2b1b24;
+      --yes:#ff4d8d;
+      --no:#ffffff;
+      --shadow: 0 18px 60px rgba(0,0,0,.12);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100svh;
+      display:grid;
+      place-items:center;
+      background: radial-gradient(900px 600px at 30% 20%, var(--pink2), transparent 60%),
+                  radial-gradient(900px 600px at 70% 80%, var(--pink1), transparent 60%),
+                  linear-gradient(160deg, var(--pink2), var(--pink1));
+      font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      overflow:hidden;
+    }
+
+    .card{
+      width:min(720px, 92vw);
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.6);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 28px 20px 24px;
+      text-align:center;
+      backdrop-filter: blur(8px);
+      position: relative;
+      z-index: 2;
+    }
+
+    h1{
+      margin: 4px 0 8px;
+      font-size: clamp(26px, 4vw, 44px);
+      letter-spacing: -0.02em;
+    }
+
+    .heart{
+      font-size: clamp(30px, 4.5vw, 52px);
+      margin-bottom: 8px;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.10));
+      user-select:none;
+    }
+
+    .buttons{
+  margin-top: 18px;
+  display:flex;
+  gap:60px;   
+  justify-content:center;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+    button{
+      border:0;
+      cursor:pointer;
+      border-radius: 16px;
+      padding: 14px 22px;
+      font-weight: 800;
+      font-size: 16px;
+      transition: transform .12s ease, box-shadow .12s ease, width .2s ease, height .2s ease;
+      user-select:none;
+    }
+    button:active{ transform: translateY(1px) scale(.99); }
+
+    #yesBtn{
+      background: linear-gradient(135deg, #ff4d8d, #ff77aa);
+      color:white;
+      box-shadow: 0 14px 28px rgba(255,77,141,.25);
+      transform-origin: center;
+    }
+
+    #noBtn{
+      background: rgba(255,255,255,.85);
+      color: var(--text);
+      border: 1px solid rgba(0,0,0,.08);
+      box-shadow: 0 10px 20px rgba(0,0,0,.06);
+    }
+
+    .final{
+      position:fixed;
+      inset:0;
+      display:none;
+      place-items:center;
+      z-index: 5;
+      text-align:center;
+      padding: 18px;
+      background: radial-gradient(1000px 700px at 50% 30%, rgba(255,255,255,.65), transparent 60%),
+                  linear-gradient(160deg, var(--pink2), var(--pink1));
+    }
+    .final.show{ display:grid; }
+
+    .final h2{
+      margin:0;
+      font-size: clamp(30px, 5vw, 64px);
+      letter-spacing:-0.03em;
+    }
+    .final .sub{
+      margin-top:10px;
+      font-size: clamp(16px, 2.5vw, 22px);
+      opacity:.9;
+    }
+    .stickers{
+      margin-top: 16px;
+      font-size: clamp(26px, 4.2vw, 46px);
+      line-height: 1.2;
+      user-select:none;
+    }
+
+    /* Heart burst overlay */
+    .burst{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index: 6;
+      overflow:hidden;
+    }
+    .fheart{
+  position:absolute;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: floatUp linear forwards;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.10));
+}
+@keyframes floatUp{
+  0%   { transform: translateY(10vh) translateX(0) rotate(0deg); opacity:0; }
+  12%  { opacity: .95; }
+  80%  { opacity: .95; }
+  100% { transform: translateY(-130vh) translateX(40px) rotate(25deg); opacity:0; }
+}
+
+    .fullscreen-yes{
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100svh !important;
+      border-radius: 0 !important;
+      font-size: clamp(26px, 6vw, 56px) !important;
+      box-shadow: none !important;
+      z-index: 4 !important;
+    }
+.pozaNoi{
+  width: 220px;
+  max-width: 60vw;
+  border-radius: 22px;
+  margin-top: 22px;
+  margin-bottom: 22px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.18);
+  border: 5px solid white;
+}
+.pozaFinal{
+  width: 250px;   
+  max-width: 75vw;
+  border-radius: 22px;
+  margin-top: 18px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.18);
+  border: 5px solid white;
+}
+  </style>
+</head>
+<body>
+
+  <div class="card" id="card">
+    <div class="heart">💗</div>
+    <h1>Vrei să fii Valentine-ul meu, Alexia?</h1>
+    <img src="terog.gif" class="pozaNoi">
+    <div class="buttons">
+      <button id="yesBtn">DA </button>
+      <button id="noBtn">NU </button>
+    </div>
+  </div>
+
+  <div class="final" id="final">
+    <div>
+      <h2>YEY TE IUBESC ALEXIA 💖</h2>
+      <div class="sub">Ai ales corect, iubita mea!</div>
+       <img src="noi.jpeg" class="pozaFinal">
+      <div class="stickers">💖💖🌸🌸🌷🌷💞💞</div>
+    </div>
+  </div>
+
+  <div class="burst" id="burst"></div>
+
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn  = document.getElementById("noBtn");
+    const card   = document.getElementById("card");
+    const final  = document.getElementById("final");
+    const burst  = document.getElementById("burst");
+
+    const noTexts = [
+      "NU ",
+      "Ești sigură? ",
+      "Chiar ești sigură? ",
+      "Te rog Alexiaaaa",
+      "Te rog frumos",
+      "Nu te cred ",
+      "Minți de rupi",
+      "Ok, ești sigură sigură? ",
+    ];
+    let noIndex = 0;
+
+    let scale = 1;
+
+    function makeHearts(count = 24){
+      for(let i=0;i<count;i++){
+        const h = document.createElement("div");
+        h.className = "fheart";
+        h.textContent = Math.random() > 0.5 ? "💖" : "💘";
+        h.style.left = (Math.random()*100) + "vw";
+        h.style.bottom = (-10 - Math.random()*30) + "px";
+        h.style.fontSize = (28 + Math.random()*60) + "px";   // inimioare MULT mai mari
+        h.style.animationDuration = (4 + Math.random()*5) + "s";
+        h.style.animationDelay = (Math.random()*0.4) + "s";
+        burst.appendChild(h);
+       h.addEventListener("animationend", () => h.remove());
+      }
+    }
+
+    function startFinalHearts(){
+  setInterval(()=>{
+    for(let i=0;i<8;i++){
+      const h = document.createElement("div");
+      h.className = "fheart";
+      h.textContent = Math.random() > 0.5 ? "💖" : "💘";
+      h.style.left = (Math.random()*100) + "vw";
+      h.style.bottom = (-10 - Math.random()*30) + "px";
+      h.style.fontSize = (30 + Math.random()*70) + "px";
+      h.style.animationDuration = (5 + Math.random()*4) + "s";
+      burst.appendChild(h);
+      h.addEventListener("animationend", () => h.remove());
+    }
+  }, 700);
+}
+
+    function goFinal(){
+      card.style.display = "none";
+      final.classList.add("show");
+      makeHearts(60);
+      startFinalHearts();;
+    }
+
+    yesBtn.addEventListener("click", goFinal);
+
+    noBtn.addEventListener("click", ()=>{
+      noIndex = Math.min(noIndex + 1, noTexts.length - 1);
+      noBtn.textContent = noTexts[noIndex];
+
+      scale *= 1.35;
+      yesBtn.style.transform = `scale(${scale})`;
+
+      if(scale > 8){
+    yesBtn.classList.add("fullscreen-yes");
+    yesBtn.textContent = "DA";
+    noBtn.style.display = "none";   
+    makeHearts(30);                 
+    }
+    });
+
+    setInterval(()=> makeHearts(6), 900);
+  </script>
+</body>
+</html>
